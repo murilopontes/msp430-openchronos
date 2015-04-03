@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<Workspace>
+  <ConfigDictionary>
+    
+  <CurrentConfigs><Project>cc1111_usb_dongle/868MHz - Limited IAR Kickstart (Europe)</Project></CurrentConfigs></ConfigDictionary>
+  <Desktop>
+    <Static>
+      <Workspace>
+        <ColumnWidths>
+          
+          
+          
+          
+        <Column0>343</Column0><Column1>12</Column1><Column2>27</Column2><Column3>1242140</Column3></ColumnWidths>
+      </Workspace>
+      <Build>
+        
+        
+        
+        
+      <PreferedWindows><Position>3</Position><ScreenPosX>0</ScreenPosX><ScreenPosY>0</ScreenPosY><Windows><Window><Factory>Find-in-Files</Factory></Window></Windows></PreferedWindows><ColumnWidth0>20</ColumnWidth0><ColumnWidth1>915</ColumnWidth1><ColumnWidth2>240</ColumnWidth2><ColumnWidth3>61</ColumnWidth3></Build>
+    <Debug-Log><PreferedWindows><Position>3</Position><ScreenPosX>0</ScreenPosX><ScreenPosY>0</ScreenPosY><Windows/></PreferedWindows><ColumnWidth0>19</ColumnWidth0><ColumnWidth1>264</ColumnWidth1></Debug-Log><TerminalIO/><Find-in-Files><PreferedWindows><Position>3</Position><ScreenPosX>0</ScreenPosX><ScreenPosY>0</ScreenPosY><Windows><Window><Factory>Build</Factory></Window></Windows></PreferedWindows><ColumnWidth0>440</ColumnWidth0><ColumnWidth1>62</ColumnWidth1><ColumnWidth2>754</ColumnWidth2></Find-in-Files></Static>
+    <Windows>
+      
+      
+    <Wnd1>
+        <Tabs>
+          <Tab>
+            <Identity>TabID-26546-27884</Identity>
+            <TabName>Workspace</TabName>
+            <Factory>Workspace</Factory>
+            <Session>
+              
+            <NodeDict><ExpandedNode>cc1111_usb_dongle</ExpandedNode><ExpandedNode>cc1111_usb_dongle/Output</ExpandedNode><ExpandedNode>cc1111_usb_dongle/USB</ExpandedNode><ExpandedNode>cc1111_usb_dongle/USB/class_cdc</ExpandedNode><ExpandedNode>cc1111_usb_dongle/USB/library</ExpandedNode></NodeDict></Session>
+          </Tab>
+        </Tabs>
+        
+      <SelectedTab>0</SelectedTab></Wnd1><Wnd2><Tabs><Tab><Identity>TabID-17759-11906</Identity><TabName>Build</TabName><Factory>Build</Factory><Session/></Tab><Tab><Identity>TabID-9414-11171</Identity><TabName>Find in Files</TabName><Factory>Find-in-Files</Factory><Session/></Tab></Tabs><SelectedTab>1</SelectedTab></Wnd2><Wnd5><Tabs><Tab><Identity>TabID-31469-3508</Identity><TabName>Debug Log</TabName><Factory>Debug-Log</Factory><Session/></Tab></Tabs><SelectedTab>0</SelectedTab></Wnd5></Windows>
+    <Editor>
+      
+      
+      
+      
+    <Pane><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\usb\class_cdc\usb_firmware_library_config.c</Filename><XPos>0</XPos><YPos>6</YPos><SelStart>930</SelStart><SelEnd>930</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\usb\library\usb_descriptor.h</Filename><XPos>0</XPos><YPos>130</YPos><SelStart>6198</SelStart><SelEnd>6205</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\usb\library\usb_suspend.h</Filename><XPos>0</XPos><YPos>82</YPos><SelStart>5164</SelStart><SelEnd>5164</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\usb\library\usb_framework.h</Filename><XPos>0</XPos><YPos>193</YPos><SelStart>10021</SelStart><SelEnd>10021</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\868MHz - Limited IAR Kickstart (Europe)\List\usb_framework.lst</Filename><XPos>0</XPos><YPos>139</YPos><SelStart>11783</SelStart><SelEnd>11783</SelEnd></Tab><Tab><Factory>TextEditor</Factory><Filename>$WS_DIR$\868MHz - Limited IAR Kickstart (Europe)\List\usb_cdc_hooks.lst</Filename><XPos>0</XPos><YPos>207</YPos><SelStart>15031</SelStart><SelEnd>15031</SelEnd></Tab><ActiveTab>5</ActiveTab></Pane><ActivePane>0</ActivePane><Sizes><Pane><X>1000000</X><Y>1000000</Y></Pane></Sizes><SplitMode>1</SplitMode></Editor>
+    <Positions>
+      
+      
+      
+      
+      
+    <Top><Row0><Sizes><Toolbar-00aba6a0><key>iaridepm.enu1</key></Toolbar-00aba6a0></Sizes></Row0></Top><Left><Row0><Sizes><Wnd1><Rect><Top>-2</Top><Left>-2</Left><Bottom>489</Bottom><Right>418</Right><x>-2</x><y>-2</y><xscreen>-840785</xscreen><yscreen>-330817</yscreen><sizeHorzCX>-656863280</sizeHorzCX><sizeHorzCY>-345320458</sizeHorzCY><sizeVertCX>328125</sizeVertCX><sizeVertCY>512526</sizeVertCY></Rect></Wnd1></Sizes></Row0></Left><Right><Row0><Sizes/></Row0></Right><Bottom><Row0><Sizes><Wnd2><Rect><Top>-2</Top><Left>-2</Left><Bottom>227</Bottom><Right>1282</Right><x>-2</x><y>-2</y><xscreen>1284</xscreen><yscreen>229</yscreen><sizeHorzCX>1003125</sizeHorzCX><sizeHorzCY>239040</sizeHorzCY><sizeVertCX>96094</sizeVertCX><sizeVertCY>101253</sizeVertCY></Rect></Wnd2></Sizes></Row0><Row1><Sizes><Wnd5><Rect><Top>225</Top><Left>-2</Left><Bottom>425</Bottom><Right>1282</Right><x>-2</x><y>225</y><xscreen>1284</xscreen><yscreen>200</yscreen><sizeHorzCX>1003125</sizeHorzCX><sizeHorzCY>208768</sizeHorzCY><sizeVertCX>156250</sizeVertCX><sizeVertCY>208768</sizeVertCY></Rect></Wnd5></Sizes></Row1></Bottom><Float><Sizes/></Float></Positions>
+  </Desktop>
+</Workspace>
+
+
