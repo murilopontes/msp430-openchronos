@@ -87,8 +87,20 @@ void InitProject_v(void);
 // *************************************************************************************************
 // The one and only main function
 // *************************************************************************************************
+
+void delay_ms(int tempo){
+  for(int i=0;i<tempo;i++)
+   __delay_cycles(16000);
+}
+void delay_us(int tempo){
+  for(int i=0;i<tempo;i++)
+   __delay_cycles(16);
+}
+
 void main (void)
 {
+
+  
   // Stop WDT
   WDTCTL = WDTPW + WDTHOLD;
 
@@ -115,7 +127,10 @@ void main (void)
   INIT_TX_ACTIVITY;
   INIT_RX_ACTIVITY;
 
-
+  
+  
+// Protocolos para remover
+  
   // Initialize BR receiver library
   BR_Init_v();
   BRTX_SetID_v(TX_SERIAL_NO);
@@ -123,6 +138,8 @@ void main (void)
   // Reset simpliciti_data
   simpliciti_data[0] = 0xFF;
 
+  
+  
   // Initialize command handler
   usb_handler_init();
 
@@ -143,8 +160,18 @@ void main (void)
     USB_handleVbusOnEvent();
   }
 
+  while(1){
+    LED_ON;
+    delay_ms(100);
+    LED_OFF;
+    delay_ms(100);
+    
+  }
+  
   while (1)
   {
+    //start loop
+    LED_ON;
 
     // For BlueRobin
     if (bluerobin_start_now && !simpliciti_on && !wbsl_on)
@@ -204,6 +231,8 @@ void main (void)
        RX_ACTIVITY_OFF;
    }
 
+   //end loop
+   LED_OFF;
   }
 
 }
