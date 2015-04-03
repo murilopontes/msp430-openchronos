@@ -36,16 +36,29 @@ extern "C"
 
 // Configuration Constants that can change
 // #define that relates to Device Descriptor
-#define USB_VID               0x2047        // Vendor ID (VID)
-#define USB_PID               0x0340        // Product ID (PID)
+//#define USB_VID               0x2047        // Vendor ID (VID)
+//#define USB_PID               0x0340        // Product ID (PID)
+
+//USB\VID_0451&PID_F432&MI_00
+//#define USB_VID               0x0451        // Vendor ID (VID)
+//#define USB_PID               0xF432        // Product ID (PID)
+
+#define USB_VID               0x0451        // Vendor ID (VID)
+#define USB_PID               0xF433        // Product ID (PID)
+
+    
 /*----------------------------------------------------------------------------+
 | Firmware Version                                                            |
 | How to detect version number of the FW running on MSP430?                   |
 | on Windows Open ControlPanel->Systems->Hardware->DeviceManager->Ports->     |
 |         Msp430->ApplicationUART->Details                                    |
 +----------------------------------------------------------------------------*/
-#define VER_FW_H              0x02          // Device release number, in binary-coded decimal
+//#define VER_FW_H              0x02          // Device release number, in binary-coded decimal
+//#define VER_FW_L              0x00          // Device release number, in binary-coded decimal
+  
+#define VER_FW_H              0x01          // Device release number, in binary-coded decimal
 #define VER_FW_L              0x00          // Device release number, in binary-coded decimal
+  
 // If a serial number is to be reported, set this to the index within the string descriptor
 //of the dummy serial number string.  It will then be automatically handled by the API.
 // If no serial number is to be reported, set this to 0.
