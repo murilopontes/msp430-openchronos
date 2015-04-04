@@ -23,8 +23,9 @@
 #include <string.h>
 
 #include <USB_API/USB_CDC_API/UsbCdc.h>
-#include <USB_API/USB_HID_API/UsbHid.h>
-#include <USB_API/USB_HID_API/UsbHidReq.h>
+//#include <USB_API/USB_HID_API/UsbHid.h>
+//#include <USB_API/USB_HID_API/UsbHidReq.h>
+
 /*----------------------------------------------------------------------------+
 | External Variables                                                          |
 +----------------------------------------------------------------------------*/

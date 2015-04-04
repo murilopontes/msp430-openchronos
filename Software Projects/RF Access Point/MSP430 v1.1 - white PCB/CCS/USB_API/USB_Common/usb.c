@@ -31,9 +31,10 @@
 #include "../USB_Common/defMSP430USB.h"
 #include "../USB_Common/usb.h"      //USB-specific Data Structures
 #include "../USB_CDC_API/UsbCdc.h"
-#include "../USB_PHDC_API/UsbPHDC.h"
-#include "../USB_HID_API/UsbHidReq.h"
-#include "../USB_MSC_API/UsbMscScsi.h"
+
+//#include "../USB_PHDC_API/UsbPHDC.h"
+//#include "../USB_HID_API/UsbHidReq.h"
+//#include "../USB_MSC_API/UsbMscScsi.h"
 #include <descriptors.h>
 
 #include <HAL_UCS.h>
