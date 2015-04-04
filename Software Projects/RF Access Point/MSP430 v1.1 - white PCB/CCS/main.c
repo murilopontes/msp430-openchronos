@@ -53,7 +53,7 @@
 
 
 #include "BM_API.h"
-#include "BlueRobin_TX_API.h"
+//#include "BlueRobin_TX_API.h"
 #include "simpliciti.h"
 #include "mrfi.h"
 #include "WBSL/wbsl.h"
@@ -117,9 +117,13 @@ void main (void)
   INIT_RX_ACTIVITY;
 
   // Initialize BR receiver library
+  /*
   BR_Init_v();
   BRTX_SetID_v(TX_SERIAL_NO);
   BRTX_WriteData_v(0, 40);
+  */
+
+
   // Reset simpliciti_data
   simpliciti_data[0] = 0xFF;
 
@@ -147,6 +151,7 @@ void main (void)
   {
 
     // For BlueRobin
+	  /*
     if (bluerobin_start_now && !simpliciti_on && !wbsl_on)
     {
       // Start BlueRobin stack
@@ -155,8 +160,10 @@ void main (void)
       // Reset start flag
       bluerobin_start_now = 0;
     }
+    */
     // For SimpliciTI AP
-    else if (simpliciti_start_now && !wbsl_on)
+    //else
+    if (simpliciti_start_now && !wbsl_on)
     {
       RX_ACTIVITY_ON;
       // Clear start trigger
@@ -350,6 +357,7 @@ void InitPorts_v(void)
 // *************************************************************************************************
 // Start BlueRobin transmission
 // *************************************************************************************************
+/*
 void bluerobin_start(void)
 {
   u32 ID_u32;
@@ -364,20 +372,22 @@ void bluerobin_start(void)
   // Set on flag
   bluerobin_on = 1;
 }
-
+*/
 // *************************************************************************************************
 // Stop BlueRobin transmission
 // *************************************************************************************************
+/*
 void bluerobin_stop(void)
 {
   BRTX_Stop_v();
   //Stop BlueRobin Timer
   TA0CTL &= ~MC1;
-  /* Set Timer0 count register to 0x0000 */
+  // Set Timer0 count register to 0x0000
   TA0R = 0;
   // Clear on flag
   bluerobin_on = 0;
 }
+*/
 
 /*  
  * ======== UNMI_ISR ========

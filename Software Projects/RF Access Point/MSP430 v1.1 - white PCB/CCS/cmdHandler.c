@@ -10,7 +10,7 @@
 #include "project.h"
 #include "cmdHandler.h"
 #include "simpliciti.h"
-#include "BlueRobin_TX_API.h"
+//#include "BlueRobin_TX_API.h"
 #include "BM_API.h"
 #include "bsp_leds.h"
 
@@ -29,6 +29,9 @@
 
 // *************************************************************************************************
 // Function prototype section
+
+
+
 
 BYTE USB_disconnect ();
 
@@ -83,7 +86,7 @@ void usb_handler_init(void)
 void usb_decode(void)
 {
   u8  Counter_u8;
-  u32 ID_u32;
+  //u32 ID_u32;
   u8 i;
   // Check if start marker is set
   if (usb_buffer[PACKET_BYTE_START] != 0xFF) return;
@@ -144,18 +147,24 @@ void usb_decode(void)
     case BM_STOP_BLUEROBIN:   bluerobin_stop();
                               system_status = HW_BLUEROBIN_STOPPED;
                               break;
+
+
+/*
     case BM_SET_BLUEROBIN_ID: BRTX_SetID_v(  ((u32)usb_buffer[PACKET_BYTE_FIRST_DATA + 3] << 24)
                                            + ((u32)usb_buffer[PACKET_BYTE_FIRST_DATA + 2] << 16)
                                            + ((u16)usb_buffer[PACKET_BYTE_FIRST_DATA + 1] << 8)
                                            +       usb_buffer[PACKET_BYTE_FIRST_DATA]
                                           );
                               break;
+
     case BM_GET_BLUEROBIN_ID: ID_u32 = BRTX_GetID_u32();
     	                      usb_buffer[PACKET_BYTE_FIRST_DATA+3] = ID_u32 >> 24;
                               usb_buffer[PACKET_BYTE_FIRST_DATA+2] = ID_u32 >> 16;
                               usb_buffer[PACKET_BYTE_FIRST_DATA+1] = ID_u32 >> 8;
                               usb_buffer[PACKET_BYTE_FIRST_DATA]   = ID_u32;
                               break;
+*/
+
     case BM_SET_HEARTRATE:    HeartRate_u8 = usb_buffer[PACKET_BYTE_FIRST_DATA];
                               break;
     case BM_SET_SPEED:        Speed_u8     = usb_buffer[PACKET_BYTE_FIRST_DATA];
@@ -387,11 +396,13 @@ void usb_decode(void)
 }
 
 // Function called just before a new packet is build
+/*
 void BRTX_PrepareData_v(void)
 {
 }
-
+*/
 // Function called after data have been sent
+/*
 void BRTX_DataTransfered_v(void)
 {
   static u16 TimeAccumulator_u16 = 0;
@@ -410,7 +421,7 @@ void BRTX_DataTransfered_v(void)
 
   BRTX_WriteData_v(DataToSend_u32, DataToSend_u8);
 }
-
+*/
 
 // *************************************************************************************************
 // End of file

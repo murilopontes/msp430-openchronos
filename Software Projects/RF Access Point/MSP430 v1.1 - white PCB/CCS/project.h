@@ -8,8 +8,24 @@
 // *************************************************************************************************
 // Include section
 
-#include <bm.h>
+//#include <bm.h>
 #include <msp430F5509.h>
+
+#include <stdint.h>
+
+#ifndef _SHELL_TYPES
+#define _SHELL_TYPES
+typedef uint8_t BYTE;
+typedef uint8_t u8;
+typedef uint16_t u16;
+typedef uint32_t u32;
+#endif
+
+#ifndef FALSE
+#define FALSE 0
+#endif
+
+
 
 // *************************************************************************************************
 // Defines section
