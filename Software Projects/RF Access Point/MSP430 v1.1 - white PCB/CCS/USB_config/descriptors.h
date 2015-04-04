@@ -108,7 +108,9 @@ extern "C"
 #define MSC_CLASS  4
 #define PHDC_CLASS 5
 
-	#define MAX_PACKET_SIZE   0x40              // Max size of the USB packets.
+
+
+#define MAX_PACKET_SIZE   64              // Max size of the USB packets.
 
 //***********************************************************************************************
 // DESCRIPTOR CONSTANTS

@@ -208,6 +208,8 @@ void main (void)
 
 }
 
+volatile int tosend;
+
 void USB_Handler_v(void)
 {
 	WORD bytesSent;
@@ -226,19 +228,24 @@ void USB_Handler_v(void)
           }
 
           USBCDC_receiveData(&usb_buffer[usb_bufferIndex], bytesReceived, 0);
+          if(bytesReceived>0) LED_ON;
 
           // Increase buffer index
           usb_bufferIndex += bytesReceived;
 
           // get packet length from byte #2 of received packet
+          /*
           if ((usb_bufferIndex >= 2) && (usb_buffer[2] >= USB_MIN_MESSAGE_LENGTH) && (usb_bufferIndex > (usb_buffer[2] - 1)))
           {
             //extract data from packet
             usb_decode();
             usb_bufferIndex = 0;
           }
+          */
+          usb_bufferIndex=0;
         }
 
+        usb_sendack=1;
         // From MSP430 to PC
         if (usb_sendack)
         {
@@ -247,15 +254,32 @@ void USB_Handler_v(void)
             // Disable interrupts
             __disable_interrupt();
 
-            switch (USBCDC_sendData(&usb_buffer[0], usb_buffer[2], 0))
+            //calculate how many bytes to copy
+            tosend=strlen(usb_buffer);
+            if(tosend>sizeof(usb_buffer)){
+             	tosend=sizeof(usb_buffer);
+            }
+            //clear TX
+            memset(usb_bufferTX,0,sizeof(usb_bufferTX));
+            //copy from RX to TX
+            memcpy(usb_bufferTX,usb_buffer,tosend);
+            //clear RX
+            memset(usb_buffer,0,sizeof(usb_buffer));
+
+            switch (USBCDC_sendData(usb_bufferTX, tosend, 0))
             {
               case kUSBCDC_sendStarted:
                 break;
               case kUSBCDC_busNotAvailable:
                 break;
+              case kUSBCDC_sendComplete:
+
+            	  break;
               default:
-                break;;
+                break;
             }
+            LED_OFF;
+
             usb_sendack = 0;
             // Enable interrupts
             __enable_interrupt();

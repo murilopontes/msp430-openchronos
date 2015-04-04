@@ -57,6 +57,7 @@ u8 wbsl_OPCode;
 u8 wbsl_packetLength;
 
 u8 usb_buffer[USB_MAX_MESSAGE_LENGTH + 2];
+u8 usb_bufferTX[USB_MAX_MESSAGE_LENGTH + 2];
 u8 usb_bufferIndex;
 u8 usb_newdata;
 u8 usb_sendack;

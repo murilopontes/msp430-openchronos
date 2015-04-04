@@ -26,7 +26,7 @@ extern "C" {
 // Defines section
 
 #define USB_MIN_MESSAGE_LENGTH        (3u)
-#define USB_MAX_MESSAGE_LENGTH        (32u)
+#define USB_MAX_MESSAGE_LENGTH        (64)
 
 
 // *************************************************************************************************
@@ -49,6 +49,7 @@ extern u8 simpliciti_start_now;
 extern u8 wbsl_start_now;
 
 extern u8 usb_buffer[USB_MAX_MESSAGE_LENGTH + 2];
+extern u8 usb_bufferTX[USB_MAX_MESSAGE_LENGTH + 2];
 extern u8 usb_bufferIndex;
 extern u8 usb_newdata;
 extern u8 usb_sendack;
