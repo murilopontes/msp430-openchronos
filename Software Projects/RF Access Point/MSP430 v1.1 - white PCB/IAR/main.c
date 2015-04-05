@@ -160,18 +160,11 @@ void main (void)
     USB_handleVbusOnEvent();
   }
 
-  while(1){
-    LED_ON;
-    delay_ms(100);
-    LED_OFF;
-    delay_ms(100);
-    
-  }
-  
   while (1)
   {
     //start loop
     LED_ON;
+    delay_ms(50);
 
     // For BlueRobin
     if (bluerobin_start_now && !simpliciti_on && !wbsl_on)
@@ -233,12 +226,16 @@ void main (void)
 
    //end loop
    LED_OFF;
+   delay_ms(50);
   }
 
 }
 
 void USB_Handler_v(void)
 {
+  LED_ON;
+  return;
+  
 	WORD bytesSent;
 	WORD bytesReceived;
 
@@ -276,6 +273,7 @@ void USB_Handler_v(void)
             // Disable interrupts
             __disable_interrupt();
 
+            
             switch (USBCDC_sendData(&usb_buffer[0], usb_buffer[2], 0))
             {
               case kUSBCDC_sendStarted:

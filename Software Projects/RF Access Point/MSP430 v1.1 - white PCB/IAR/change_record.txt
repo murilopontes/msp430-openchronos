@@ -1,5 +1,0 @@
-V1.2 (09.2013)
-- Added RFBSL function
-
-V1.1 (04.2013)
-First version released to manufacturing.

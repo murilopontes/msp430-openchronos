@@ -1203,29 +1203,29 @@
         </option>
         <option>
           <name>RTConfigPath</name>
-          <state>$TOOLKIT_DIR$\LIB\DLIB\dl430xsfn.h</state>
+          <state>$TOOLKIT_DIR$\lib\dlib\dl430xlsfn.h</state>
         </option>
         <option>
           <name>RTLibraryPath</name>
-          <state>$TOOLKIT_DIR$\LIB\DLIB\dl430xsfn.r43</state>
+          <state>$TOOLKIT_DIR$\lib\dlib\dl430xlsfn.r43</state>
         </option>
         <option>
           <name>Input variant</name>
           <version>2</version>
-          <state>3</state>
+          <state>0</state>
         </option>
         <option>
           <name>Input description</name>
-          <state>No specifier n, no float or long long.</state>
+          <state>Automatic choice of formatter.</state>
         </option>
         <option>
           <name>Output variant</name>
           <version>2</version>
-          <state>3</state>
+          <state>0</state>
         </option>
         <option>
           <name>Output description</name>
-          <state>No specifier a or A.</state>
+          <state>Automatic choice of formatter.</state>
         </option>
         <option>
           <name>GRuntimeLibSelectSlave</name>
@@ -1373,7 +1373,7 @@
         </option>
         <option>
           <name>Math description</name>
-          <state></state>
+          <state>Default variants of cos, sin, tan, log, log10, pow, and exp.</state>
         </option>
       </data>
     </settings>
@@ -1454,7 +1454,7 @@
         <option>
           <name>CCAllowList</name>
           <version>1</version>
-          <state>10010</state>
+          <state>11111</state>
         </option>
         <option>
           <name>CCObjUseModuleName</name>
@@ -1590,16 +1590,16 @@
         </option>
         <option>
           <name>CCOptLevel</name>
-          <state>2</state>
+          <state>3</state>
         </option>
         <option>
           <name>CCOptStrategy</name>
           <version>0</version>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>CCOptLevelSlave</name>
-          <state>2</state>
+          <state>3</state>
         </option>
         <option>
           <name>CInput</name>
@@ -1617,7 +1617,7 @@
         </option>
         <option>
           <name>IccLang</name>
-          <state>0</state>
+          <state>2</state>
         </option>
         <option>
           <name>IccCDialect</name>
@@ -1944,7 +1944,7 @@
         </option>
         <option>
           <name>XList</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>SegmentMap</name>
@@ -1976,7 +1976,7 @@
         </option>
         <option>
           <name>XclFile</name>
-          <state>$TOOLKIT_DIR$\CONFIG\lnk430F5509.xcl</state>
+          <state>$TOOLKIT_DIR$\config\linker\lnk430f5509.xcl</state>
         </option>
         <option>
           <name>XclFileSlave</name>
@@ -2223,7 +2223,7 @@
         </option>
         <option>
           <name>XlinkStackUsageEnable</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>XlinkControlFiles</name>
@@ -6944,7 +6944,7 @@
       <name>$PROJ_DIR$\F5xx_F6xx_Core_Lib\HAL_FLASH.h</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\F5xx_F6xx_Core_Lib\hal_macros.h</name>
+      <name>$PROJ_DIR$\F5xx_F6xx_Core_Lib\HAL_MACROS.h</name>
     </file>
     <file>
       <name>$PROJ_DIR$\F5xx_F6xx_Core_Lib\HAL_PMAP.c</name>

@@ -75,20 +75,9 @@ void main (void)
 
 
 	// As fast as possible 26MHz to GDO2 pin of CC1101 as it is required to clock USB
-
 	wbsl_SpiInit();
 	wbsl_SpiWriteReg(IOCFG0,0x2e);
 	wbsl_SpiWriteReg(IOCFG2,0x30);
-
-	//CC_SPI_Init_v();
-
-	//CC_SPI_WriteRead_u8(CCXX00_REG_IOCFG0);
-	//CC_SPI_WriteRead_u8(0x2E);
-
-	//CC_SPI_WriteRead_u8(CCXX00_REG_IOCFG2);
-	//CC_SPI_WriteRead_u8(0x30);
-
-	//CC_SPI_DeselectChip_v();
 
 	//
 	UCSCTL6 |= XT2BYPASS;
@@ -139,7 +128,7 @@ void main (void)
 				__disable_interrupt();
 
 				//calculate how many bytes to copy
-				int tosend=strlen(usb_bufferRX);
+				int tosend=strlen((const char*)usb_bufferRX);
 				if(tosend>sizeof(usb_bufferTX)){
 					tosend=sizeof(usb_bufferTX);
 				}

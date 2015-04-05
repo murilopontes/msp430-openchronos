@@ -83,9 +83,31 @@ void usb_decode(void)
   u8  Counter_u8;
   u32 ID_u32;
   u8 i;
-  // Check if start marker is set
-  if (usb_buffer[PACKET_BYTE_START] != 0xFF) return;
 
+/*  
+  usb_sendack = 1;
+  usb_buffer[PACKET_BYTE_START] = 0xff;
+  usb_buffer[PACKET_BYTE_CMD] = HW_NO_ERROR;
+  usb_buffer[PACKET_BYTE_SIZE] = 9;
+  usb_buffer[3]='t';
+  usb_buffer[4]='r';
+  usb_buffer[5]='e';
+  usb_buffer[6]='t';
+  usb_buffer[7]='a';
+  usb_buffer[8]=0;
+  return;
+ */ 
+  
+  
+  
+  // Check if start marker is set
+  if (usb_buffer[PACKET_BYTE_START] != 0xFF){
+    LED_ON;
+    return;
+  } else {
+    LED_OFF;
+  }
+  
   // Check command code
   switch (usb_buffer[PACKET_BYTE_CMD])
   {

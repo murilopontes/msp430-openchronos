@@ -43,8 +43,9 @@ extern "C"
 //#define USB_VID               0x0451        // Vendor ID (VID)
 //#define USB_PID               0xF432        // Product ID (PID)
 
-#define USB_VID               0x0451        // Vendor ID (VID)
-#define USB_PID               0xF433        // Product ID (PID)
+  //2047&Pid_03df
+#define USB_VID               0x2047        // Vendor ID (VID)
+#define USB_PID               0x03df        // Product ID (PID)
 
     
 /*----------------------------------------------------------------------------+

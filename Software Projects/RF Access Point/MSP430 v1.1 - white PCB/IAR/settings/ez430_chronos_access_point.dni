@@ -47,7 +47,7 @@ NextState1=0
 Break=0
 State Storage=0
 [DebugChecksum]
-Checksum=1545471694
+Checksum=426945298
 [CallStack]
 ShowArgs=0
 [Disassembly]
@@ -55,9 +55,16 @@ MixedMode=1
 [EEM Sequencer]
 Buffer=AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
 [EEM Cycle Counter 0]
-Counter0=AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+Counter0=GAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAA
 [EEM Cycle Counter 1]
-Counter1=AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+Counter1=GAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAA
+[Log file]
+LoggingEnabled=_ 0
+LogFile=_ ""
+Category=_ 0
+[TermIOLog]
+LoggingEnabled=_ 0
+LogFile=_ ""
 [Breakpoints]
 Count=0
 [FET]
@@ -68,7 +75,7 @@ Extended Clock Control Enable=1
 Advanced Extended Clock Control=0
 Emulation mode=0
 Free running=0
-Shutting Down=3
+Shutting Down=1
 [Memory Dump]
 Start address=
 Lenghth=
@@ -80,14 +87,10 @@ SP=0
 SR=0
 all registers=0
 File name=
-[Log file]
-LoggingEnabled=_ 0
-LogFile=_ ""
-Category=_ 0
-[TermIOLog]
-LoggingEnabled=_ 0
-LogFile=_ ""
 [Aliases]
-A0=_ "C:\workspace_IAR_5.60\simpliciti\Components\nwk\nwk_QMgmt.c" ""
-Count=1
+A0=_ "C:\workspace_IAR_5.60\simpliciti\Components\mrfi\radios\family1\mrfi_radio.c" ""
+A1=_ "C:\workspace_IAR_5.60\simpliciti\Components\nwk\nwk_QMgmt.c" ""
+A2=_ "C:\workspace_IAR_5.60\simpliciti\Components\nwk\nwk_frame.c" ""
+A3=_ "D:\Software Projects\RF Access Point\MSP430 v1.1 - white PCB\IAR\USB_API\USB_Common\usb.c" ""
+Count=4
 SuppressDialog=1
