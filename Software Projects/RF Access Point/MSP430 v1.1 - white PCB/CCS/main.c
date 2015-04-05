@@ -189,11 +189,8 @@ void USB_Handler_v(void)
 			usb_bufferTX[1]=usb_bufferRX[1];
 			usb_bufferTX[2]=wbsl_SpiCmdStrobe(usb_bufferRX[1]);
 			if(usb_bufferRX[1]==0x30){
-				//after cc1101 - gdo2 no generate 26mhz needed for usb-cdc
-				//must be re-enable 26mhz on gdo2 and reset usb
-				wbsl_SpiWriteReg(IOCFG0,0x2e); //(0x2E) High impedance (3-state)
-				wbsl_SpiWriteReg(IOCFG2,0x30); //(0x30) CLK_XOSC/1
-				USB_reset();
+				//reset
+				 PMMCTL0 |= PMMSWPOR;
 			}
 			txlen=3;
 		}
