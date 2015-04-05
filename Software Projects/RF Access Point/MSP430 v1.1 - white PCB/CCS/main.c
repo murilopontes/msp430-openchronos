@@ -34,6 +34,8 @@
 // *************************************************************************************************
 #include <intrinsics.h>
 #include <string.h>
+#include <stdio.h>
+#include <stdlib.h>
 #include "project.h"
 //#include "ccSPI.h"
 //#include "ccxx00.h"
@@ -66,18 +68,31 @@ volatile u8 bCDCDataReceived_event = FALSE;   //Indicates data has been received
 int novo_comando=0;
 uint8_t usb_bufferRX[64];
 uint8_t usb_bufferTX[64];
+uint8_t txlen=0;
+
+WORD bytesReceived_usbevent;
+
+void delay_us(int us){
+	int i;
+	for(i=0;i<us;i++){
+		__delay_cycles(16);
+	}
+}
+void delay_ms(int ms){
+	int i;
+	for(i=0;i<ms;i++){
+		delay_us(1000);
+	}
+}
 
 
-void main (void)
-{
-	// Stop WDT
-	WDTCTL = WDTPW + WDTHOLD;
-
+void usb_reset(){
 
 	// As fast as possible 26MHz to GDO2 pin of CC1101 as it is required to clock USB
 	wbsl_SpiInit();
-	wbsl_SpiWriteReg(IOCFG0,0x2e);
-	wbsl_SpiWriteReg(IOCFG2,0x30);
+	wbsl_SpiWriteReg(IOCFG0,0x2e); //(0x2E) High impedance (3-state)
+	wbsl_SpiWriteReg(IOCFG2,0x30); //(0x30) CLK_XOSC/1
+
 
 	//
 	UCSCTL6 |= XT2BYPASS;
@@ -111,55 +126,25 @@ void main (void)
 	{
 		USB_handleVbusOnEvent();
 	}
+}
+
+void main (void)
+{
+	// Stop WDT
+	WDTCTL = WDTPW + WDTHOLD;
+
+
+	usb_reset();
 
 	while (1)
 	{
-
-		if(novo_comando){
-
-			WORD bytesSent;
-			WORD bytesReceived;
-			if ((USBCDC_intfStatus(0, &bytesSent, &bytesReceived) & kUSBCDC_waitingForSend) == 0)
-			{
-				novo_comando=0;
-
-				//we can send
-				// Disable interrupts
-				__disable_interrupt();
-
-				//calculate how many bytes to copy
-				int tosend=strlen((const char*)usb_bufferRX);
-				if(tosend>sizeof(usb_bufferTX)){
-					tosend=sizeof(usb_bufferTX);
-				}
-				//clear TX
-				memset(usb_bufferTX,0,sizeof(usb_bufferTX));
-				//copy from RX to TX
-				memcpy(usb_bufferTX,usb_bufferRX,tosend);
-				//clear RX
-				memset(usb_bufferRX,0,sizeof(usb_bufferRX));
-
-				switch (USBCDC_sendData(usb_bufferTX, tosend, 0))
-				{
-				case kUSBCDC_sendStarted:
-					break;
-				case kUSBCDC_busNotAvailable:
-					break;
-				case kUSBCDC_sendComplete:
-
-					break;
-				default:
-					break;
-				}
+		LED_ON;
+		delay_ms(50);
+		LED_OFF;
+		delay_ms(50);
 
 
-				LED_OFF;
 
-
-				// Enable interrupts
-				__enable_interrupt();
-			}
-		}
 	}
 
 }
@@ -168,23 +153,116 @@ void main (void)
 
 
 
-
+uint8_t cc1101_fifo[64];
 
 void USB_Handler_v(void)
 {
+	LED_ON;
+
+	txlen=0;
+
 	// From PC to MSP430
 	if (bCDCDataReceived_event)
 	{
 		bCDCDataReceived_event = FALSE;                    // Clear flag early -- just in case execution breaks below because of an error
-		WORD bytesReceived;
-		bytesReceived = USBCDC_bytesInUSBBuffer(0);
-		if(bytesReceived>sizeof(usb_bufferRX)){
-			bytesReceived=sizeof(usb_bufferRX);
+
+		bytesReceived_usbevent = USBCDC_bytesInUSBBuffer(0);
+		if(bytesReceived_usbevent>sizeof(usb_bufferRX)){
+			bytesReceived_usbevent=sizeof(usb_bufferRX);
 		}
-		USBCDC_receiveData(usb_bufferRX, bytesReceived, 0);
-		if(bytesReceived>0) LED_ON;
-		novo_comando=1;
+		USBCDC_receiveData(usb_bufferRX, bytesReceived_usbevent, 0);
+
 	}
+
+
+	if(bytesReceived_usbevent>0){
+
+		//clear TX
+		memset(usb_bufferTX,0,sizeof(usb_bufferTX));
+		txlen=bytesReceived_usbevent;
+
+
+		//stroke
+		if(usb_bufferRX[0]==1 && bytesReceived_usbevent==2){
+			//
+			usb_bufferTX[0]=usb_bufferRX[0];
+			usb_bufferTX[1]=usb_bufferRX[1];
+			usb_bufferTX[2]=wbsl_SpiCmdStrobe(usb_bufferRX[1]);
+			if(usb_bufferRX[1]==0x30){
+				//after cc1101 - gdo2 no generate 26mhz needed for usb-cdc
+				//must be re-enable 26mhz on gdo2 and reset usb
+				wbsl_SpiWriteReg(IOCFG0,0x2e); //(0x2E) High impedance (3-state)
+				wbsl_SpiWriteReg(IOCFG2,0x30); //(0x30) CLK_XOSC/1
+				USB_reset();
+			}
+			txlen=3;
+		}
+		//reg read
+		if(usb_bufferRX[0]==2 && bytesReceived_usbevent==2){
+			usb_bufferTX[0]=usb_bufferRX[0];
+			usb_bufferTX[1]=usb_bufferRX[1];
+			usb_bufferTX[2]=wbsl_SpiReadReg(usb_bufferRX[1]);
+			txlen=3;
+		}
+		//reg write
+		if(usb_bufferRX[0]==3 && bytesReceived_usbevent==3){
+
+		}
+		//fifo read
+		if(usb_bufferRX[0]==4){
+			int rxlen=wbsl_SpiReadReg(RXBYTES);
+			if(rxlen>0){
+				wbsl_SpiReadRxFifo(cc1101_fifo,rxlen);
+				memcpy(usb_bufferTX,cc1101_fifo,rxlen);
+				txlen=rxlen;
+			}
+			else {
+			    memset(usb_bufferTX,0xff,64);
+			    txlen=64;
+			}
+		}
+		//fifo write (max 63 bytes payload)
+		if(usb_bufferRX[0]==5){
+			memcpy(cc1101_fifo,&usb_bufferRX[1],bytesReceived_usbevent-1);
+			wbsl_SpiWriteTxFifo(cc1101_fifo,bytesReceived_usbevent-1);
+			memcpy(usb_bufferTX,usb_bufferRX,bytesReceived_usbevent);
+			txlen=bytesReceived_usbevent;
+		}
+
+		//clear RX
+		memset(usb_bufferRX,0,sizeof(usb_bufferRX));
+
+
+	}
+
+
+	if(txlen){
+		WORD bytesSent;
+		WORD bytesReceived;
+		if ((USBCDC_intfStatus(0, &bytesSent, &bytesReceived) & kUSBCDC_waitingForSend) == 0)
+		{
+			//we can send
+			// Disable interrupts
+			__disable_interrupt();
+			switch (USBCDC_sendData(usb_bufferTX, txlen, 0))
+			{
+			case kUSBCDC_sendStarted:
+				break;
+			case kUSBCDC_busNotAvailable:
+				break;
+			case kUSBCDC_sendComplete:
+
+				break;
+			default:
+				break;
+			}
+
+			// Enable interrupts
+			__enable_interrupt();
+		}
+	}
+
+	LED_OFF;
 }
 
 // *************************************************************************************************
