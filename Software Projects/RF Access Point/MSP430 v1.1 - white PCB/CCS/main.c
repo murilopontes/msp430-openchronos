@@ -35,8 +35,8 @@
 #include <intrinsics.h>
 #include <string.h>
 #include "project.h"
-#include "ccSPI.h"
-#include "ccxx00.h"
+//#include "ccSPI.h"
+//#include "ccxx00.h"
 
 #include "USB_config/descriptors.h"
 
@@ -52,7 +52,9 @@
 
 
 #include "BM_API.h"
-#include "WBSL/wbsl.h"
+//#include "WBSL/wbsl.h"
+#include "WBSL/spi_wbsl.h"
+
 
 //Function declarations
 void InitPorts_v(void);
@@ -73,15 +75,22 @@ void main (void)
 
 
 	// As fast as possible 26MHz to GDO2 pin of CC1101 as it is required to clock USB
-	CC_SPI_Init_v();
 
-	CC_SPI_WriteRead_u8(CCXX00_REG_IOCFG0);
-	CC_SPI_WriteRead_u8(0x2E);
+	wbsl_SpiInit();
+	wbsl_SpiWriteReg(IOCFG0,0x2e);
+	wbsl_SpiWriteReg(IOCFG2,0x30);
 
-	CC_SPI_WriteRead_u8(CCXX00_REG_IOCFG2);
-	CC_SPI_WriteRead_u8(0x30);
+	//CC_SPI_Init_v();
 
-	CC_SPI_DeselectChip_v();
+	//CC_SPI_WriteRead_u8(CCXX00_REG_IOCFG0);
+	//CC_SPI_WriteRead_u8(0x2E);
+
+	//CC_SPI_WriteRead_u8(CCXX00_REG_IOCFG2);
+	//CC_SPI_WriteRead_u8(0x30);
+
+	//CC_SPI_DeselectChip_v();
+
+	//
 	UCSCTL6 |= XT2BYPASS;
 
 	// Initialize unused port pins
