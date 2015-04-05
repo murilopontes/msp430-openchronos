@@ -225,6 +225,8 @@ extern "C" {
 
 
 /* SPI critical section macros */
+
+
 typedef bspIState_t wbslSpiIState_t;
 #define WBSL_SPI_ENTER_CRITICAL_SECTION(x)          BSP_ENTER_CRITICAL_SECTION(x)
 #define WBSL_SPI_EXIT_CRITICAL_SECTION(x)           BSP_EXIT_CRITICAL_SECTION(x)

@@ -40,7 +40,8 @@
 #include "wbsl.h"
 #include "project.h"
 #include <string.h>
-#include "bsp.h"
+//#include "bsp.h"
+//#include "bsp_macros.h"
 #include "bsp_macros.h"
 #include "spi_wbsl.h"
 

@@ -2,7 +2,7 @@
   Revised:        $Date: 2007-07-06 11:19:00 -0700 (Fri, 06 Jul 2007) $
   Revision:       $Revision: 13579 $
 
-  Copyright 2007 Texas Instruments Incorporated. All rights reserved.
+  Copyright 2007 Texas Instruments Incorporated.  All rights reserved.
 
   IMPORTANT: Your use of this Software is limited to those specific rights granted under
   the terms of a software license agreement between the user who downloaded the software,
@@ -26,62 +26,63 @@
   THIRD PARTIES (INCLUDING BUT NOT LIMITED TO ANY DEFENSE THEREOF), OR OTHER SIMILAR COSTS.
 
   Should you have any questions regarding your right to use this Software,
-  contact Texas Instruments Incorporated at www.TI.com. 
+  contact Texas Instruments Incorporated at www.TI.com.
 **************************************************************************************************/
 
 /* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
  *   BSP (Board Support Package)
- *   Button driver include file.
+ *   Target : Texas Instruments EZ430-RF2500
+ *            "MSP430 Wireless Development Tool"
+ *   Board definition file.
  * =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
  */
 
-#ifndef BSP_BUTTONS_H
-#define BSP_BUTTONS_H
+#ifndef BSP_BOARD_DEFS_H
+#define BSP_BOARD_DEFS_H
 
 
 /* ------------------------------------------------------------------------------------------------
- *                                           Includes
+ *                                     Board Unique Define
  * ------------------------------------------------------------------------------------------------
  */
-#include "bsp_button_defs.h"
+#define BSP_BOARD_EZ430RF
 
 
 /* ------------------------------------------------------------------------------------------------
- *                                           Defines
+ *                                           Mcu
  * ------------------------------------------------------------------------------------------------
  */
-#define BSP_NUM_BUTTONS                   __bsp_NUM_BUTTONS__
+#include "bsp_msp430_defs.h"
+#include "stdint.h"
 
 
 /* ------------------------------------------------------------------------------------------------
- *                                            Macros
+ *                                          Clock
  * ------------------------------------------------------------------------------------------------
  */
-#define BSP_BUTTON_DEBOUNCE_WAIT(expr)    __bsp_BUTTON_DEBOUNCE_WAIT__(expr)    
-
-#define BSP_BUTTON1()   __bsp_BUTTON1__()
-#define BSP_BUTTON2()   __bsp_BUTTON2__()
-#define BSP_BUTTON3()   __bsp_BUTTON3__()
-#define BSP_BUTTON4()   __bsp_BUTTON4__()
-#define BSP_BUTTON5()   __bsp_BUTTON5__()
-#define BSP_BUTTON6()   __bsp_BUTTON6__()
-#define BSP_BUTTON7()   __bsp_BUTTON7__()
-#define BSP_BUTTON8()   __bsp_BUTTON8__()
+#include "bsp_config.h"
+#define __bsp_CLOCK_MHZ__    BSP_CONFIG_CLOCK_MHZ
 
 
 /* ------------------------------------------------------------------------------------------------
- *                                        Prototypes
+ *                                     Board Initialization
  * ------------------------------------------------------------------------------------------------
  */
-void BSP_InitButtons(void);
+#define BSP_BOARD_C               "bsp_board.c"
+#define BSP_INIT_BOARD()          BSP_InitBoard()
+#define BSP_DELAY_USECS(x)        BSP_Delay(x)
 
+void BSP_InitBoard(void);
+void BSP_Delay(uint16_t usec);
 
 /* ************************************************************************************************
  *                                   Compile Time Integrity Checks
  * ************************************************************************************************
  */
-#ifdef BSP_NO_BUTTONS
-#error "ERROR: The button driver is disabled.  This file should not be included."
+#if (defined __IAR_SYSTEMS_ICC__) && (__VER__ >= 342)
+#if (!defined __MSP430F2274__)
+#error "ERROR: Mismatch between specified board and selected microcontroller."
+#endif
 #endif
 
 
