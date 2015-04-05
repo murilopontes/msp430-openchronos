@@ -1,7 +1,0 @@
-V1.0.0.2 (02.02.2010)
-Commented and cleaned up source code. Moved enumser function to library.
-See http://www.naughter.com/enumser.html for source code.
-Added Wireless Updater functions
-													
-V1.0.0.1 (22.11.2009)
-First version released to manufacturing.

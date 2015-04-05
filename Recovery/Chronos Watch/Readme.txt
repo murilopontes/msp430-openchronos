@@ -1,1 +1,0 @@
-The recovery packages may be used for both Chronos kit versions - v1.0 (black PCB) and v1.1 (white PCB).
