@@ -109,7 +109,9 @@ u8 wbsl_SpiCmdStrobe(u8 addr)
 
 u8 wbsl_SpiReadReg(u8 addr)
 {
-    WBSL_SPI_ASSERT(addr <= 0x3B);    /* invalid address */
+
+	//
+    //WBSL_SPI_ASSERT(addr <= 0x3F);    /* invalid address */
 
     /*
      *  The burst bit is set to allow access to read-only status registers.
@@ -133,7 +135,7 @@ u8 wbsl_SpiReadReg(u8 addr)
 
 void wbsl_SpiWriteReg(u8 addr, u8 value)
 {
-     WBSL_SPI_ASSERT((addr <= 0x2E) || (addr == 0x3E));    /* invalid address */
+     //WBSL_SPI_ASSERT((addr <= 0x2E) || (addr == 0x3E));    /* invalid address */
 
      spiRegAccess(addr, value);
 }

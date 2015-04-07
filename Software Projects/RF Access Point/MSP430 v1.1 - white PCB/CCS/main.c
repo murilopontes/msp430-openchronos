@@ -159,7 +159,8 @@ void USB_Handler_v(void)
 {
 	LED_ON;
 
-	txlen=0;
+	memset(usb_bufferTX,0,sizeof(usb_bufferTX));
+	txlen=sizeof(usb_bufferTX);
 
 	// From PC to MSP430
 	if (bCDCDataReceived_event)
@@ -175,89 +176,97 @@ void USB_Handler_v(void)
 	}
 
 
-	if(bytesReceived_usbevent>0){
 
-		//clear TX
-		memset(usb_bufferTX,0,sizeof(usb_bufferTX));
+	__disable_interrupt();
+
+	//stroke
+	if(usb_bufferRX[0]==1 && bytesReceived_usbevent==2 && usb_bufferRX[1]>=0x30 && usb_bufferRX[1]<=0x3d){
+		//
+		usb_bufferTX[0]=usb_bufferRX[0];
+		usb_bufferTX[1]=usb_bufferRX[1];
+		usb_bufferTX[2]=wbsl_SpiCmdStrobe(usb_bufferRX[1]);
+		if(usb_bufferRX[1]==0x30){
+			//reset
+			PMMCTL0 |= PMMSWPOR;
+		}
+		txlen=3;
+	}
+	//reg read
+	if(usb_bufferRX[0]==2 && bytesReceived_usbevent==2 && usb_bufferRX[1]>=0x0 && usb_bufferRX[1]<=0x3f){
+		usb_bufferTX[0]=usb_bufferRX[0];
+		usb_bufferTX[1]=usb_bufferRX[1];
+		usb_bufferTX[2]=wbsl_SpiReadReg(usb_bufferRX[1]);
+		txlen=3;
+	}
+	//reg write
+	if(usb_bufferRX[0]==3 && bytesReceived_usbevent==3 && usb_bufferRX[1]>=0x0 && usb_bufferRX[1]<=0x3f){
+		usb_bufferTX[0]=usb_bufferRX[0];
+		usb_bufferTX[1]=usb_bufferRX[1];
+
+		int i;
+		for(i=0;i<100;i++){
+		  wbsl_SpiWriteReg(usb_bufferRX[1],usb_bufferRX[2]);
+		  usb_bufferTX[2]=wbsl_SpiReadReg(usb_bufferRX[1]);
+		  if(usb_bufferTX[2]==usb_bufferRX[2]){
+			  break;
+		  }
+		}
+		usb_bufferTX[3]=i;
+		txlen=4;
+	}
+	//fifo read
+	if(usb_bufferRX[0]==4 && bytesReceived_usbevent==1){
+		int rxlen=wbsl_SpiReadReg(RXBYTES);
+		if(rxlen>0){
+			wbsl_SpiReadRxFifo(cc1101_fifo,rxlen);
+			memcpy(usb_bufferTX,cc1101_fifo,rxlen);
+			txlen=rxlen;
+		}
+		else {
+			memset(usb_bufferTX,0xff,64);
+			txlen=64;
+		}
+	}
+
+	//fifo write (max 63 bytes payload)
+	if(usb_bufferRX[0]==5 && bytesReceived_usbevent>=1 && bytesReceived_usbevent<=64){
+		memcpy(cc1101_fifo,&usb_bufferRX[1],bytesReceived_usbevent-1);
+		wbsl_SpiWriteTxFifo(cc1101_fifo,bytesReceived_usbevent-1);
+		memcpy(usb_bufferTX,usb_bufferRX,bytesReceived_usbevent);
 		txlen=bytesReceived_usbevent;
-
-
-		//stroke
-		if(usb_bufferRX[0]==1 && bytesReceived_usbevent==2){
-			//
-			usb_bufferTX[0]=usb_bufferRX[0];
-			usb_bufferTX[1]=usb_bufferRX[1];
-			usb_bufferTX[2]=wbsl_SpiCmdStrobe(usb_bufferRX[1]);
-			if(usb_bufferRX[1]==0x30){
-				//reset
-				 PMMCTL0 |= PMMSWPOR;
-			}
-			txlen=3;
-		}
-		//reg read
-		if(usb_bufferRX[0]==2 && bytesReceived_usbevent==2){
-			usb_bufferTX[0]=usb_bufferRX[0];
-			usb_bufferTX[1]=usb_bufferRX[1];
-			usb_bufferTX[2]=wbsl_SpiReadReg(usb_bufferRX[1]);
-			txlen=3;
-		}
-		//reg write
-		if(usb_bufferRX[0]==3 && bytesReceived_usbevent==3){
-
-		}
-		//fifo read
-		if(usb_bufferRX[0]==4){
-			int rxlen=wbsl_SpiReadReg(RXBYTES);
-			if(rxlen>0){
-				wbsl_SpiReadRxFifo(cc1101_fifo,rxlen);
-				memcpy(usb_bufferTX,cc1101_fifo,rxlen);
-				txlen=rxlen;
-			}
-			else {
-			    memset(usb_bufferTX,0xff,64);
-			    txlen=64;
-			}
-		}
-		//fifo write (max 63 bytes payload)
-		if(usb_bufferRX[0]==5){
-			memcpy(cc1101_fifo,&usb_bufferRX[1],bytesReceived_usbevent-1);
-			wbsl_SpiWriteTxFifo(cc1101_fifo,bytesReceived_usbevent-1);
-			memcpy(usb_bufferTX,usb_bufferRX,bytesReceived_usbevent);
-			txlen=bytesReceived_usbevent;
-		}
-
-		//clear RX
-		memset(usb_bufferRX,0,sizeof(usb_bufferRX));
-
-
 	}
 
+	//clear RX
+	memset(usb_bufferRX,0,sizeof(usb_bufferRX));
 
-	if(txlen){
-		WORD bytesSent;
-		WORD bytesReceived;
-		if ((USBCDC_intfStatus(0, &bytesSent, &bytesReceived) & kUSBCDC_waitingForSend) == 0)
+
+	__enable_interrupt();
+
+
+	WORD bytesSent;
+	WORD bytesReceived;
+	if ((USBCDC_intfStatus(0, &bytesSent, &bytesReceived) & kUSBCDC_waitingForSend) == 0)
+	{
+		//we can send
+		// Disable interrupts
+		__disable_interrupt();
+		switch (USBCDC_sendData(usb_bufferTX, txlen, 0))
 		{
-			//we can send
-			// Disable interrupts
-			__disable_interrupt();
-			switch (USBCDC_sendData(usb_bufferTX, txlen, 0))
-			{
-			case kUSBCDC_sendStarted:
-				break;
-			case kUSBCDC_busNotAvailable:
-				break;
-			case kUSBCDC_sendComplete:
+		case kUSBCDC_sendStarted:
+			break;
+		case kUSBCDC_busNotAvailable:
+			break;
+		case kUSBCDC_sendComplete:
 
-				break;
-			default:
-				break;
-			}
-
-			// Enable interrupts
-			__enable_interrupt();
+			break;
+		default:
+			break;
 		}
+
+		// Enable interrupts
+		__enable_interrupt();
 	}
+
 
 	LED_OFF;
 }
